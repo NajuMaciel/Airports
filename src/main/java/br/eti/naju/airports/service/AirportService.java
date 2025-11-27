@@ -1,5 +1,6 @@
 package br.eti.naju.airports.service;
 
+import br.eti.naju.airports.DTO.AirportMinDTO;
 import br.eti.naju.airports.repositories.AirportRepository;
 import br.eti.naju.airports.entities.Airport;
 import java.util.List;
@@ -22,6 +23,14 @@ public class AirportService {
         List<Airport> result = airportRepository.findByCityIgnoreCase(city);
         
         return result;
-
+    }
+    
+    public List<AirportMinDTO> findByCountry(String country) {
+        List<Airport> resultAirport = airportRepository.findByCountryIgnoreCase(country);
+        
+        List<AirportMinDTO> resultDTO = resultAirport.stream()
+                .map(x -> new AirportMinDTO(x)).toList();
+        
+        return resultDTO;
     }
 }
